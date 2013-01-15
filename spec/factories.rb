@@ -5,4 +5,7 @@ FactoryGirl.define do
     password "foobar"
     password_confirmation "foobar"
   end
+  factory :label do
+  	name     "ExpenseX"
+  end
 end

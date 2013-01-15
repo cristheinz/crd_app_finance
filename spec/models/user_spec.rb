@@ -16,7 +16,36 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
 
+  it { should respond_to(:expenses) }
+  it { should respond_to(:labels) }
+  it { should respond_to(:following?) }
+  it { should respond_to(:follow!) }
+  it { should respond_to(:unfollow!) }
+
   it { should be_valid }
+
+  describe "following" do
+    let(:label) { FactoryGirl.create(:label) }    
+    before do
+      @user.save
+      @user.follow!(label)
+    end
+
+    it { should be_following(label) }
+    its(:labels) { should include(label) }
+
+    describe "followed user" do
+      subject { label }
+      its(:users) { should include(@user) }
+    end
+
+    describe "and unfollowing" do
+      before { @user.unfollow!(label) }
+
+      it { should_not be_following(label) }
+      its(:labels) { should_not include(label) }
+    end
+  end
 
   describe "when name is not present" do
     before { @user.name = " " }

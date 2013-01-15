@@ -2,6 +2,9 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation
   has_secure_password
 
+  has_many :expenses, foreign_key: "user_id", dependent: :destroy
+  has_many :labels, through: :expenses, source: :label
+
   before_save { self.email.downcase! }
   before_save :create_remember_token
 
@@ -12,6 +15,18 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
+
+  def following?(label)
+    expenses.find_by_label_id(label.id)
+  end
+
+  def follow!(label)
+    expenses.create!(label_id: label.id)
+  end
+
+  def unfollow!(label)
+    expenses.find_by_label_id(label.id).destroy
+  end
 
   private
 
