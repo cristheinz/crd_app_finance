@@ -1,0 +1,12 @@
+<tr>
+<td><%= link_to expense.label.name, expense %></td>
+<td><div class="pull-right"><%= number_with_delimiter(number_with_precision(expense.balance(@prefs), :precision => 2), :delimiter => " ", :separator => ",") %></div></td>
+<td><div class="pull-right"><%= number_with_delimiter(number_with_precision(expense.invoiced, :precision => 2), :delimiter => " ", :separator => ",") %></div></td>
+<td><div class="pull-right"><%= number_with_delimiter(number_with_precision(expense.estimated/@recurrence_fraction, :precision => 2), :delimiter => " ", :separator => ",") %></div></td>
+<td><div class="center"><%= expense.tracks.count %></div></td>
+<% if current_user?(expense.user) %>
+  <td><%= link_to "delete", expense, method: :delete,
+    data: { confirm: "You sure?"  }, 
+    title: "tracks wil be deleted too" %></td>
+<% end %>
+</tr>

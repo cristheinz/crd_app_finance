@@ -1,0 +1,9 @@
+<h1>Resume</h1>
+<span>
+  <%= pluralize(current_user.expenses.count, "expense") %>
+  following
+</span>
+<span>
+	Balance: 
+	<%= number_with_delimiter(number_with_precision(@balance, :precision => 2), :delimiter => " ", :separator => ",") %>€
+</span>

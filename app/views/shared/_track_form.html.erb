@@ -1,0 +1,22 @@
+<h1>Expense Tracker</h1>
+<%= form_for(@track) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="field">
+    <%= fields_for @label do |l| %>
+       <%= render 'shared/error_messages', object: l.object %>
+  	   Label</br>
+  	   <%= l.text_field :name, :class => "span3", :data => {:provide => "typeahead", :items => "8", :source => @labels.to_json } %>
+    <% end %>
+
+  	<%= f.label :date %>
+    <%= f.date_select :date %>
+
+    <%= f.label :value %>
+    <%= f.number_field :value, class: "span3", min: 0, step: 0.01 %>
+
+    <%= f.label :status %>
+    <!--<%= f.text_field :status, class: "span3" %>-->
+    <%= f.select(:status, ["Paid","Invoiced","Estimated","Received"], class: "span3") %>
+  </div>
+  <%= f.submit "Track", class: "btn btn-large btn-primary" %>
+<% end %>

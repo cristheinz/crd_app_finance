@@ -8,4 +8,6 @@ class Label < ActiveRecord::Base
 
   validates :name, presence: true, length: { maximum: 50 }, 
                     uniqueness: { case_sensitive: false }
+
+  default_scope :order => "name ASC"
 end

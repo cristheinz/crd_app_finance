@@ -1,0 +1,34 @@
+
+<div class="row">
+    <div class="span9">
+   	  <h3>All Expenses (<%= current_user.expenses.count %>)</h3>
+	  <p>Actual Balance: <%= number_with_delimiter(number_with_precision(@sld, :precision => 2), :delimiter => " ", :separator => ",") %></p>
+
+	  <table class="table table-striped">
+		<tr>
+		<th>Label</th>
+		<th><div class="center"><%=session[:prefs]["type"]+" "+session[:prefs]["recurrence"]%> Value</div></th>
+		<th><div class="center">Last Invoiced Value</div></th>
+		<th><div class="center">Last Estimated Value</div></th>
+		<th>Tracks</th>
+		<th>Option</th>
+		</tr>
+  		<%= render @expenses %>
+  		<tr>
+		<th>Totals</th>
+		<th><div class="pull-right"><%= number_with_delimiter(number_with_precision(@balance, :precision => 2), :delimiter => " ", :separator => ",") %></div></th>
+		<th></th>
+		<th><div class="pull-right"><%= number_with_delimiter(number_with_precision(@budget, :precision => 2), :delimiter => " ", :separator => ",") %></div></th>
+		<th></th>
+		<th></th>
+		</tr>
+	  </table>
+	  
+  	</div>
+    <aside class="span3 pull-right">
+      <section data-spy="affix" >
+      	<h3>Preferences</h3>
+        <%= render 'shared/expense_form' %>
+      </section>
+    </aside>
+</div>

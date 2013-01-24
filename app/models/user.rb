@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   has_many :expenses, foreign_key: "user_id", dependent: :destroy
   has_many :labels, through: :expenses, source: :label
+  has_many :tracks, through: :expenses
 
   before_save { self.email.downcase! }
   before_save :create_remember_token
@@ -21,7 +22,10 @@ class User < ActiveRecord::Base
   end
 
   def follow!(label)
-    expenses.create!(label_id: label.id)
+    unless following?(label)
+      expenses.create!(label_id: label.id)
+    end
+    following?(label)
   end
 
   def unfollow!(label)

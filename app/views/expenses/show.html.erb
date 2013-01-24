@@ -1,0 +1,18 @@
+<div class="row">
+    <aside class="span4">
+      <section>
+        <h1>
+        	<%= @expense.label.name %>
+        </h1>
+      </section>
+    </aside>
+    <div class="span8">
+    <% if @expense.tracks.any? %>
+      <h3>Tracks (<%= @expense.tracks.count %>)</h3>
+      <ol class="tracks">
+        <%= render @tracks %>
+      </ol>
+      <%= will_paginate @tracks %>
+    <% end %>
+  	</div>
+</div>

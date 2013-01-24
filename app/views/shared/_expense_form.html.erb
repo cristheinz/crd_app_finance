@@ -1,0 +1,10 @@
+<%= form_for(@expense) do |f| %>
+  <div class="field">
+  	<%= f.label :type %>
+    <%= f.select :type, ["Current", "Last"], class: "span3", selected: session[:prefs]["type"] %>
+
+    <%= f.label :recurrence %>
+    <%= f.select :recurrence, ["Year", "Month", "Week", "Day"], class: "span3", selected: session[:prefs]["recurrence"] %>
+  </div>
+  <%= f.submit "Refresh", class: "btn btn-large btn-primary" %>
+<% end %>

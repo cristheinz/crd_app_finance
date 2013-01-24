@@ -1,6 +1,8 @@
 CrdAppFinance::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+  resources :tracks, only: [:create, :destroy]
+  resources :expenses, only: [:create, :index, :show, :destroy]
 
   root to: 'static_pages#home'
 

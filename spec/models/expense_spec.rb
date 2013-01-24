@@ -7,6 +7,8 @@ describe Expense do
 
   subject { expense }
 
+  it { should respond_to(:tracks) }
+
   it { should be_valid }
 
   describe "accessible attributes" do

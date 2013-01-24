@@ -2,6 +2,11 @@ module SessionsHelper
   def sign_in(user)
     cookies.permanent[:remember_token] = user.remember_token
     self.current_user = user
+
+    prefs={}
+    prefs["type"]="Current"
+    prefs["recurrence"]="Year"
+    store_prefs prefs
   end
 
   def signed_in?
@@ -33,4 +38,18 @@ module SessionsHelper
   def store_location
     session[:return_to] = request.url
   end
+
+  def signed_in_user
+    unless signed_in?
+      store_location
+      redirect_to signin_url, notice: "Please sign in."
+    end
+  end
+
+  def store_prefs(prefs)
+    session.delete(:prefs)
+    session[:prefs] = prefs
+  end
+
+
 end

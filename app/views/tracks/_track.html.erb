@@ -1,0 +1,17 @@
+<li>
+  <span class="content">
+  	<%= track.status %>
+
+  	<%= number_with_delimiter(number_with_precision(track.value, :precision => 2), :delimiter => " ", :separator => ",") %>€ 
+  	of 
+    <%= link_to track.label.name, track.expense %>
+  	<%= track.date.strftime(" on %Y/%m/%d") %> 
+  </span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(track.created_at) %> ago.
+  </span>
+  <% if current_user?(track.user) %>
+    <%= link_to "delete", track, method: :delete,
+                                     data: { confirm: "You sure?" } %>
+  <% end %>
+</li>

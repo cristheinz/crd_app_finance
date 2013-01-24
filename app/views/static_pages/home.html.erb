@@ -1,3 +1,21 @@
+<% if signed_in? %>
+<div class="row">
+    <aside class="span4">
+      <section data-spy="affix">
+        <%= render 'shared/track_form' %>
+      </section>
+    </aside>
+    <div class="span8">
+    <% if current_user.tracks.any? %>
+      <h3>All Tracks (<%= current_user.tracks.count %>)</h3>
+      <ol class="tracks">
+        <%= render @tracks %>
+      </ol>
+      <%= will_paginate @tracks %>
+    <% end %>
+  </div>
+</div>  
+<% else %>
 <div class="center hero-unit">
   <h1>Welcome to the Finance App</h1>
 
@@ -7,3 +25,4 @@
 
   <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
 </div>
+<% end %> 
