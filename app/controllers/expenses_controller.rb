@@ -17,16 +17,18 @@ class ExpensesController < ApplicationController
     @expense = Expense.new 
     @expenses = current_user.expenses.find(:all, :joins => :label, :order => 'labels.name')
 
-    @prefs=session[:prefs]
-    @recurrence_fraction=recurrence_fraction
-
     #info
-    p=current_user.tracks.sum(:value, conditions: ['status = ?','Paid'])
-    r=current_user.tracks.sum(:value, conditions: ['status = ?','Received'])
-    e=current_user.tracks.sum(:value, conditions: ['status = ?','Estimated'])
-    @sld = r-p
-    @balance = balance_totals
-    @budget = e/recurrence_fraction
+    @balance = current_user.balance
+
+    @recurrence_fraction=recurrence_fraction
+    @period=selected_period
+
+    total=current_user.totals_of(selected_period)
+    @recieved=total[:received]
+    @paid=total[:paid]
+    @total=total[:received]-total[:paid]
+    @pendent = total[:unpaid]
+    @budget = total[:estimate]/recurrence_fraction
   end
 
   def show

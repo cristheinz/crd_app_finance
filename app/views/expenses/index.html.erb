@@ -2,22 +2,30 @@
 <div class="row">
     <div class="span9">
    	  <h3>All Expenses (<%= current_user.expenses.count %>)</h3>
-	  <p>Actual Balance: <%= number_with_delimiter(number_with_precision(@sld, :precision => 2), :delimiter => " ", :separator => ",") %></p>
+	  <p>Actual Balance: <%= number_with_delimiter(number_with_precision(@balance, :precision => 2), :delimiter => " ", :separator => ",") %></p>
 
 	  <table class="table table-striped">
 		<tr>
 		<th>Label</th>
-		<th><div class="center"><%=session[:prefs]["type"]+" "+session[:prefs]["recurrence"]%> Value</div></th>
-		<th><div class="center">Last Invoiced Value</div></th>
-		<th><div class="center">Last Estimated Value</div></th>
+		<th><div class="center"><%=session[:prefs]["type"]+" "+session[:prefs]["recurrence"]%></div></th>
+		<th><div class="center">Unpaid</div></th>
+		<th><div class="center">Estimated</div></th>
 		<th>Tracks</th>
 		<th>Option</th>
 		</tr>
   		<%= render @expenses %>
+  		<tr class="italic">
+		<td><div class="pull-right">Received</div></td>
+		<td><div class="pull-right"><%= number_with_delimiter(number_with_precision(@recieved, :precision => 2), :delimiter => " ", :separator => ",") %></div></td></td><td></td><td></td><td></td>
+		</tr>
+  		<tr class="italic">
+		<td><div class="pull-right">Paid</div></td>
+		<td><div class="pull-right"><%= number_with_delimiter(number_with_precision(@paid, :precision => 2), :delimiter => " ", :separator => ",") %></div></td><td></td><td></td><td></td><td></td>
+		</tr>
   		<tr>
 		<th>Totals</th>
-		<th><div class="pull-right"><%= number_with_delimiter(number_with_precision(@balance, :precision => 2), :delimiter => " ", :separator => ",") %></div></th>
-		<th></th>
+		<th><div class="pull-right"><%= number_with_delimiter(number_with_precision(@total, :precision => 2), :delimiter => " ", :separator => ",") %></div></th>
+		<th><div class="pull-right"><%= number_with_delimiter(number_with_precision(@pendent, :precision => 2), :delimiter => " ", :separator => ",") %></div></th>
 		<th><div class="pull-right"><%= number_with_delimiter(number_with_precision(@budget, :precision => 2), :delimiter => " ", :separator => ",") %></div></th>
 		<th></th>
 		<th></th>

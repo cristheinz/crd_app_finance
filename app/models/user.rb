@@ -32,6 +32,21 @@ class User < ActiveRecord::Base
     expenses.find_by_label_id(label.id).destroy
   end
 
+  def balance
+    tracks.received.sum(:value) - tracks.paid.sum(:value)
+  end
+
+  def totals_of(period)
+    totals={}
+    expenses.each do |e|
+      totals[:unpaid]= (totals[:unpaid]||=0)+e.unpaid
+      totals[:paid]= (totals[:paid]||=0)+e.payments_during(period)
+      totals[:received]= (totals[:received]||=0)+e.receipts_during(period)
+      totals[:estimate]= (totals[:estimate]||=0)+e.last_estimate
+    end
+    totals
+  end
+
   private
 
     def create_remember_token

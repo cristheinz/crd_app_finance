@@ -1,8 +1,8 @@
 <tr>
 <td><%= link_to expense.label.name, expense %></td>
-<td><div class="pull-right"><%= number_with_delimiter(number_with_precision(expense.balance(@prefs), :precision => 2), :delimiter => " ", :separator => ",") %></div></td>
-<td><div class="pull-right"><%= number_with_delimiter(number_with_precision(expense.invoiced, :precision => 2), :delimiter => " ", :separator => ",") %></div></td>
-<td><div class="pull-right"><%= number_with_delimiter(number_with_precision(expense.estimated/@recurrence_fraction, :precision => 2), :delimiter => " ", :separator => ",") %></div></td>
+<td><div class="pull-right"><%= number_with_delimiter(number_with_precision(expense.receipts_during(@period)-expense.payments_during(@period), :precision => 2), :delimiter => " ", :separator => ",") %></div></td>
+<td><div class="pull-right"><%= number_with_delimiter(number_with_precision(expense.unpaid, :precision => 2), :delimiter => " ", :separator => ",") %></div></td>
+<td><div class="pull-right"><%= number_with_delimiter(number_with_precision(expense.last_estimate/@recurrence_fraction, :precision => 2), :delimiter => " ", :separator => ",") %></div></td>
 <td><div class="center"><%= expense.tracks.count %></div></td>
 <% if current_user?(expense.user) %>
   <td><%= link_to "delete", expense, method: :delete,
