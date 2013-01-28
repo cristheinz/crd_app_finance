@@ -4,7 +4,7 @@ class TracksController < ApplicationController
 
   def create
   	@labels = Label.find(:all,:select=>'name').map(&:name)
-    @tracks = current_user.tracks.paginate(page: params[:page], per_page: 10)
+    @tracks = current_user.tracks.paginate(page: params[:page], per_page: 6)
 
   	@track = Track.new
   	@label = Label.find_by_name(params[:label][:name])

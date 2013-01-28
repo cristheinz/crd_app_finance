@@ -26,9 +26,9 @@ class ExpensesController < ApplicationController
     total=current_user.totals_of(selected_period)
     @recieved=total[:received]
     @paid=total[:paid]
-    @total=total[:received]-total[:paid]
+    @total=(total[:received]||=0)-(total[:paid]||=0)
     @pendent = total[:unpaid]
-    @budget = total[:estimate]/recurrence_fraction
+    @budget = (total[:estimate]||=0)/recurrence_fraction
   end
 
   def show

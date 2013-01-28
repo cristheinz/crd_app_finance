@@ -8,7 +8,7 @@ class StaticPagesController < ApplicationController
 	  	@track = Track.new
 
 	  	#lists
-  		@tracks = current_user.tracks.paginate(page: params[:page], per_page: 10)
+  		@tracks = current_user.tracks.paginate(page: params[:page], per_page: 6)
 
   		#info
   		#p=current_user.tracks.sum(:value, conditions: ['status = ?','Paid'])

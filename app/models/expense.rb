@@ -19,6 +19,9 @@ class Expense < ActiveRecord::Base
   def receipts_during(period)
     eval "tracks.received.from_#{period}.sum(:value)"
   end
+  def tracks_during(period)
+    eval "tracks.from_#{period}.count"
+  end
 
   def unpaid
     v=tracks.invoiced.sum(:value)-tracks.paid.sum(:value)
@@ -32,7 +35,13 @@ class Expense < ActiveRecord::Base
     #    conditions: ['status = ? and date = ?',
     #      'Estimated', max_date["Estimated"]])
     max_date=tracks.estimated.maximum(:date)
-    tracks.estimated.at_date(max_date).sum(:value)
+    #tracks.estimated.at_date(max_date).sum(:value)
+    id=tracks.estimated.at_date(max_date).maximum(:id)
+    if id.nil?
+      0
+    else
+      Track.find(id).value 
+    end
   end
 
     #def balance(pref)
